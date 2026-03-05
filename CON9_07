@@ -1,0 +1,31 @@
+#include <bits/stdc++.h>
+using namespace std;
+int check[1005];
+vector<int> a[1005];
+void dfs(int u){
+    cout << u <<" ";
+    check[u] = 1;
+    for(int x : a[u]){
+        if(!check[x]) dfs(x);
+    }
+}
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+
+    int t;
+    cin >> t;
+    while (t--) {
+        int v, e , u;
+        cin >> v >> e >> u;
+        memset(check, 0, sizeof(check));
+        for(int i = 1; i<= e; i++){
+            int x, y;
+            cin >> x >> y;
+            a[x].push_back(y);
+        }
+        dfs(u);
+        cout << endl;
+    }
+    return 0;
+}
