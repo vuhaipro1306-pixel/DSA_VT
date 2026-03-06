@@ -1,0 +1,60 @@
+#include <bits/stdc++.h>
+using namespace std;
+vector<int> a[1005];
+int check[1005];
+int parent[1005];
+
+void bfs(int u){
+    queue<int> q;
+    q.push(u);
+    check[u] = 1;
+    while(!q.empty()){
+        int x = q.front();
+        q.pop();
+        for(int i : a[x]){
+            if(!check[i]){
+                parent[i] = x;
+                q.push(i);
+                check[i] = 1;
+            }
+        }
+    }
+}
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+
+    int t;
+    cin >> t;
+    while (t--) {
+        int v, e, x, y;
+        cin >> v >> e >> x >> y;
+        // parent[x] = 0;
+        memset(check, 0, sizeof(check));
+        for(int i = 1; i<=e;i++){
+            int n, m;
+            cin >> n >> m;
+            a[n].push_back(m);
+            a[m].push_back(n);
+        }
+        bfs(x);
+        if(!check[y]){
+            cout << -1 << endl;
+        }
+        else {
+            vector<int> res;
+            int s = y;
+            res.push_back(s);
+            while(s != x){
+                s = parent[s];
+                res.push_back(s);
+            }
+            reverse(res.begin(), res.end());
+            for(auto i : res) cout << i <<" ";
+            cout << endl;
+            }
+        }
+    return 0;
+}
+
+
