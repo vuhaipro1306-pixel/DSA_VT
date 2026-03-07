@@ -1,0 +1,31 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+const long long MOD = 123456789;
+
+long long tich(long long n){
+    if(n == 0) return 1;
+
+    long long X = tich(n/2) % MOD;
+
+    if(n % 2 == 0){
+        return (X * X) % MOD;
+    }
+    else{
+        return (X * X % MOD * 2) % MOD;
+    }
+}
+
+int main(){
+    ios::sync_with_stdio(false);
+    cin.tie(NULL);
+
+    int t;
+    cin >> t;
+
+    while(t--){
+        long long n;
+        cin >> n;
+        cout << tich(n-1) << endl;
+    }
+}
