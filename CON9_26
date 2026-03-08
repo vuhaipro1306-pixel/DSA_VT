@@ -1,0 +1,55 @@
+#include <bits/stdc++.h>
+using namespace std;
+vector<int> adj[1005];
+int check[1005];
+int parent[1005];
+bool ok;
+void b1(int v){ //khoi tao parent cho tung dinh
+    for(int i = 1; i<=v; i++) parent[i] = i;
+}
+
+int b2(int u){ //quay về cha của cha, ví dụ if(u!parent[u]) thì u = parent[u] thì sai
+    while(u != parent[u]){
+        u = parent[u];
+    }
+    return u;
+}
+
+void b3(int u, int v){
+    u = b2(u);
+    v = b2(v);
+    if(u == v) {
+        ok = true;
+        return;
+    }
+    if(u < v) parent[v] = u;
+    else parent[u] = v;
+}
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    int t;
+    cin >> t;
+    while (t--) {
+        int v, e;
+        cin >> v >> e;
+        ok = false;
+        memset(parent, 0, sizeof(parent));
+        for(int i = 1; i<=e; i++){
+            int x, y;
+            cin >> x >> y;
+            adj[x].push_back(y);
+            adj[y].push_back(x);
+        }
+        b1(v);
+        for(int i = 1; i<= v;i++){
+            for(int j : adj[i]){
+                b3(i,j);
+                if(ok) break; 
+        }
+    }
+}
+        if(ok) cout << "YES" << endl;
+        else cout << "NO" << endl;
+    return 0;
+}
