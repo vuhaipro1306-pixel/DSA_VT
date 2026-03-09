@@ -1,0 +1,46 @@
+#include <bits/stdc++.h>
+using namespace std;
+const int M = 1000006;
+int a[M];
+
+void merges(int a[], int l, int m, int r);
+
+void merge_Sort(int a[], int l, int r) {
+    if (l >= r) return;
+    int m = l + (r - l) / 2;
+    merge_Sort(a, l, m);
+    merge_Sort(a, m + 1, r);
+    merges(a, l, m, r);
+}
+
+void merges(int a[], int l, int m, int r) {
+    vector<int> L(a + l, a + m + 1);
+    vector<int> R(a + m + 1, a + r + 1);
+    int n1 = m - l + 1;
+    int n2 = r - m;
+    int i = 0, j = 0, k = l;
+
+    while (i < n1 && j < n2) {
+        if (L[i] <= R[j]) a[k++] = L[i++];
+        else              a[k++] = R[j++];
+    }
+    while (i < n1) a[k++] = L[i++];
+    while (j < n2) a[k++] = R[j++];
+}
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    int t; 
+    cin >> t;
+    while (t--) {
+        int n; 
+        cin >> n;
+        for (int i = 0; i < n; i++) cin >> a[i];
+        merge_Sort(a, 0, n - 1);
+        for (int i = 0; i < n; i++) cout << a[i] << ' ';
+        cout << '\n';
+    }
+    return 0;
+}
