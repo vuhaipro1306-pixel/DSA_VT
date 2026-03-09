@@ -1,0 +1,68 @@
+/*đường đi euler 
+    vô hướng: có chu trình euler khi các đỉnh bậc khác 0 của đồ thị liên thông với nhau 
+    -tất cả các đỉnh của đồ thị đều có bậc chẵn
+
+    có đường đi euler khi:
+    +> các đỉnh bậc khác 0 liên thông với nhau, đồ thị có đúng 0 or 2 đỉnh bậc lẻ,
+    trong TH có 2 đỉnh bậc lẻ thì đg đi sẽ bắt đầu từ đỉnh lẻ 1 và end ở đỉnh bậc lẻ 2
+
+đồ thị có hướng:
+    các đỉnh bậc != 0 đồ thị thuộc 1 tp liên thông
+    mọi đỉnh trong tp liên thoong có bán ra = bán vào 
+có đg đi nếu: 
++> các đỉnh bậc != 0 đồ thị thuộc 1 tp liên thông
+tồn tại 2 đỉnh u,v mà deg+u -deg-u = 1 và deg-v - deg+v = 1. khi đó đg đi bắt đầu từ đỉnh u end tại v
+
+*/
+#include <bits/stdc++.h>
+using namespace std;
+vector<int> adj[1005];
+int deg_in[1005];
+int check[1005];
+int deg_out[1005];
+int cnt[1005];
+int dem;
+void dfs(int u){
+    check[u] = 1;
+    cnt[u] = dem;
+    for(int i : adj[u]){
+        if(!check[i]) dfs(i);
+    }
+}
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+
+    int t;
+    cin >> t;
+    while (t--) {
+        memset(deg_in, 0, sizeof(deg_in));
+        memset(deg_out,0, sizeof(deg_out));
+        memset(check, 0, sizeof(check));
+        dem = 0;
+        int v ,e;
+        cin >> v >> e;
+        for(int i = 1; i<=e;i++){
+            int x, y;
+            cin >> x >> y;
+            adj[x].push_back(y);
+            deg_out[x]++;
+            deg_in[y]++;
+        }
+        for(int i = 1; i<=v;i++){
+            if(!check[i]) {
+                ++dem;
+                dfs(i);
+            }
+        }
+        bool ok = true;
+        for(int i = 1; i<=v;i++){
+            if(deg_in[i] != deg_out[i] || (cnt[i] != 1 && deg_in[i] != 0)){
+                ok = false; break;
+            }
+        }
+        if(ok) cout << "1\n";
+        else cout << "0\n";
+    }
+    return 0;
+}
