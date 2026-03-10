@@ -1,0 +1,31 @@
+#include <bits/stdc++.h>
+using namespace std;
+//để P min thì 1 cái sắp xếp giảm dần, 1 cái sắp xếp tăng dần
+int main(){
+    ios::sync_with_stdio(false);
+    cin.tie(NULL);
+
+    int t;
+    cin >> t;
+
+    while(t--){
+        int n;
+        cin >> n;
+
+        vector<long long> a(n), b(n);
+
+        for(long long &x : a) cin >> x;
+        for(long long &x : b) cin >> x;
+
+        sort(a.begin(), a.end());
+        sort(b.begin(), b.end(), greater<long long>());
+
+        long long sum = 0;
+
+        for(int i = 0; i < n; i++){
+            sum += 1LL * a[i] * b[i];
+        }
+
+        cout << (long long)sum << "\n";
+    }
+}
