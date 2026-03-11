@@ -1,0 +1,59 @@
+#include <bits/stdc++.h>
+using namespace std;
+/*
+b1: sắp xếp profix theo giảm dần vì ưu tiên có phí việc cao nhất
+b2:Với 1 job có deadline = d, nó được phép làm ở bất kỳ slot nào trong [1..d].
+Vòng for đi từ d xuống 1 nghĩa là:
+Ưu tiên xếp vào slot muộn nhất có thể (gần d nhất),
+Nếu slot[d] bận nhưng slot[3] trống thì vẫn dùng slot[3] (vì 3 ≤ 4, vẫn kịp deadline).
+-> với job deadline lớn -> đẩy nó về phía sau -> làm các job có deadline sớm hơn 
+*/
+bool cmp(pair<int,int> p1, pair<int,int> p2){
+    return p1.second > p2.second; // sort theo profit giảm dần
+}
+
+int main(){
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    
+    int t;
+    cin >> t;
+    while(t--){
+        int n; cin >> n;
+        vector<pair<int,int>> v; // {deadline, profit}
+        
+        for(int i = 1; i <= n; i++){
+            int J, D, P;
+            cin >> J >> D >> P;
+            v.push_back({D, P});
+        }
+        
+        sort(v.begin(), v.end(), cmp);
+        
+        // Tìm deadline lớn nhất
+        int maxD = 0;
+        for(auto& p : v) maxD = max(maxD, p.first);
+        
+        vector<int> slot(maxD + 1, -1); // slot[i] = profit nếu có job ở thời điểm, tao 1 vector slot có maxD+1 phần tử (0-> MaxD)
+        //mọi phàn tử đều có giá trị = -1;
+        
+        int cnt = 0, sum = 0;
+        for(int i = 0; i < n; i++){
+            int d = v[i].first;
+            int p = v[i].second;
+            
+            // Tìm slot trống gần deadline nhất
+            for(int j = d; j >= 1; j--){
+                if(slot[j] == -1){
+                    slot[j] = p;
+                    cnt++;
+                    sum += p;
+                    break;
+                }
+            }
+        }
+        
+        cout << cnt << " " << sum << "\n";
+    }
+    return 0;
+}
