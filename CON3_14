@@ -1,0 +1,53 @@
+#include <bits/stdc++.h>
+using namespace std;
+/*
+b1: tạo 1 mảng có 10^6  phần tử vì (10^6)^3 = 10^18
+//bài này sai test case phải thy i <= 100 mới AC 10/10
+*/
+vector<int> v;
+long long ans;
+long long res;
+unordered_set<long long> se;
+int u[20];
+void init(){
+    for(long long i = 1; i<= 100; i++){ //để i <= 1000000 -> sai 
+        se.insert(i*i*i);
+    }
+}
+void Try(long long i, long long n){
+    for(int j = 0; j<=1;j++){
+        u[i] = j;
+        if(i == n-1){
+        ans = 0;
+        for(int k = 0; k<n;k++){
+            if(u[k] == 1){
+                ans = ans*10 + v[k];
+            }
+        }
+        if(se.count(ans) && ans != 0 && res < ans) res = ans;
+    }
+    else Try(i+1, n);
+    }
+}
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    init();
+    int t;
+    cin >> t;
+    while (t--) {
+        long long n;
+        cin >> n;
+        res = -1;
+       // memset(v,0, v.size());
+        v.clear();
+        while(n){
+            v.push_back(n%10);
+            n/=10;
+        }
+        reverse(v.begin(), v.end());
+        Try(0, v.size());
+        cout << res << endl;
+    }
+    return 0;
+}
