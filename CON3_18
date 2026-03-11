@@ -1,0 +1,33 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+
+    int t;
+    cin >> t;
+    while (t--) {
+        long long n; cin >> n;
+        bool ok = false;
+        for(int y = n/7; y>=0;y--){
+            int temp = n - 7*y;
+            if(temp % 4 == 0){
+                ok = true;
+                for(int i = 1;i <= temp / 4; i++){
+                    cout << 4;
+                }
+                for(int i = 1;i <= y;i++){
+                    cout << 7;
+                }
+            }
+            if(ok){
+                cout << endl;
+                break;
+            }
+        }
+        if(ok == false) cout << -1 <<endl;
+    }
+
+    return 0;
+}
