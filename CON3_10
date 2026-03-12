@@ -1,0 +1,45 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+
+    int t;
+    cin >> t;
+
+    while (t--) {
+        int n; 
+        cin >> n;
+
+        vector<long long> v;
+        long long sum = 0;
+
+        for(int i = 0; i < n; i++){
+            long long x; 
+            cin >> x;
+            v.push_back(x);
+        }
+
+        sort(v.begin(), v.end());
+
+        while(v.size() >= 2){
+            long long a = v[0];
+            long long b = v[1];
+
+            long long s = a + b;
+            sum += s;
+
+            v.erase(v.begin());     
+            v.erase(v.begin());     
+
+            v.push_back(s);         
+
+            sort(v.begin(), v.end());
+        }
+
+        cout << sum << "\n";
+    }
+
+    return 0;
+}
