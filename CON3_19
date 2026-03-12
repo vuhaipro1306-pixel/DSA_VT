@@ -1,0 +1,31 @@
+#include <bits/stdc++.h>
+using namespace std;
+/*
+b1:  tìm phân số lớn nhất và nhỏ hơn P/Q
+-> 1/x <= P/Q -> x >= Q/P
+b2: tìm phân sô còn lại P/Q - 1/x;
+*/
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    int t;
+    cin >> t;
+    while (t--) {
+        long long P, Q; //sửa hết thành long long vì có thể tràn sô
+        cin >> P >> Q;
+        long long res;
+        while(1){
+            if(Q % P == 0){
+                cout << "1/"<< (Q/P) <<endl;
+                break;
+            }
+            else {
+                res = (Q/P + 1);
+                cout << "1/" << res <<" + ";
+                P = res*P - Q;
+                Q = res*Q;
+            }
+        }
+    }
+    return 0;
+}
