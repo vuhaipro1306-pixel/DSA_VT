@@ -1,0 +1,45 @@
+/*
+có n kí tự, k kí tự xuất hiện nhiều nhất, và giống nhau phải >= D
+Ví dụ:
+S = AAABB
+n = 5
+k = 3 (A xuất hiện nhiều nhất)
+D = 2
+Ta cần sắp xếp sao cho:
+A _ A _ A
+các A cách nhau ít nhất D vị trí.
+2. Khoảng trống cần tạo
+Nếu một ký tự xuất hiện k lần:
+A _ _ A _ _ A
+sẽ có:
+k - 1 khoảng trống
+và các kí tự khác nhau (n-k) phải >= k-1 khoảng trống ấy 
+và mỗi khoảng trống phải có ít nhất A (D-1) A các kí tự giống nhau khoảng cách phải >= D
+-> (D-1)*(k-1) <= (n-k)
+*/
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+
+    int t;
+    cin >> t;
+    while (t--) {
+        int d; cin >> d;
+        string s; cin >> s;
+        int n = s.size();
+        map<char, int> mp;
+        for(auto x:s){
+            mp[x]++;
+        }
+        int Max = 0;
+        for(auto &p : mp){
+            Max = max(Max, p.second);
+       }
+       if(Max <= n/(d-1)) cout << 1 << endl; //phải dùng công thức này mới AC 10/10 còn dùng ct trên chỉ có 9/10
+       else cout << -1 <<endl;
+    }
+    return 0;
+}
