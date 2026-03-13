@@ -1,0 +1,40 @@
+#include <bits/stdc++.h>
+using namespace std;
+/*tư duy ngây thơ for i -> for(j+1) -> TLE
+b1: các phần tử chưa tìm được phần tử lớn hơn -> lưu vào stack 
+(tạo 1 vector có n phần từ và tất cả giá trị đều bằng 1. Vì nếu lưu a[giá trị] thì quá lớn)
+b2: duyệt các phần tử trong mảng, nếu phần tử đó lớn hơn phần tử trong stack(ban đầu là top) thì nó là 
+phần tử lớn hơn gần nhất từ bên phải nó 
+chú ý: nếu đẩy a[i] vào stack và nếu gặp thì b[st.top] = a[i] thì nó quá lớn vì st.top là giá trị >=1 và <= 10^9 nên là
+lưu cái index 
+*/
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+
+    int t;
+    cin >> t;
+    while (t--) {
+        int n; cin >> n;
+        stack<int> st;
+        vector<int> a(n), b(n, -1); //vector b có n phần tử và tất cả = -1
+        for(int i = 0; i<n;i++){
+            cin >> a[i];
+        }
+        for(int i = 0; i<n;i++){
+            while(!st.empty() && a[i] > a[st.top()]){
+                b[st.top()] = i;
+                st.pop();
+            }
+            st.push(i);
+        }
+        for(int i = 0; i<n;i++){
+            if(b[i] != -1){
+                cout << a[b[i]]<<" ";
+            }
+            else cout << -1 << " ";
+        }
+        cout << endl;
+    }
+    return 0;
+}
