@@ -1,0 +1,63 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+stack<char> st1, st2;
+
+void bien_doi(string s, stack<char> &st){
+    int check = 0;
+
+    for(char c : s){
+        if(!st.empty() && st.top() == '-' && c == '('){
+            check = 1;
+        }
+        else if(c == '(' || c == ')'){
+            check = 0;
+        }
+        else if(check == 1){
+            if(c == '+') st.push('-');
+            else if(c == '-') st.push('+');
+            else st.push(c);
+        }
+        else{
+            st.push(c);
+        }
+    }
+}
+
+int main(){
+    ios::sync_with_stdio(false);
+    cin.tie(NULL);
+
+    int t;
+    cin >> t;
+    cin.ignore();
+
+    while(t--){
+        string s1, s2;
+
+        getline(cin, s1);
+        getline(cin, s2);
+
+        st1 = stack<char>();
+        st2 = stack<char>();
+
+        bien_doi(s1, st1);
+        bien_doi(s2, st2);
+
+        bool ok = true;
+
+        while(!st1.empty() && !st2.empty()){
+            if(st1.top() != st2.top()){
+                ok = false;
+                break;
+            }
+            st1.pop();
+            st2.pop();
+        }
+
+        if(!st1.empty() || !st2.empty()) ok = false;
+
+        if(ok) cout << "YES\n";
+        else cout << "NO\n";
+    }
+}
