@@ -1,0 +1,47 @@
+#include <bits/stdc++.h>
+using namespace std;
+/* ss >> c thì nó chỉ gán cho c các kí tự khác talb, cách,..
+ý tưởng: push vào stack 
+và khi gặp ')' đầu tiên thì pop các kí tự trong stack ra đến khi gặp '(' đầu tiên và khi pop gặp 
+các kí tự toán học thì đấy là 1 biểu thức đúng
+*/
+int main(){
+    int t;
+    cin >> t;
+    cin.ignore();
+
+    while(t--){
+        string s;
+        getline(cin, s);
+
+        stringstream ss(s);
+        char c;
+        stack<char> st;
+        bool check = false;
+        while(ss >> c){
+            if(c == ')'){
+                bool hasOp = false;
+
+                while(st.top() != '('){
+                    char top = st.top();
+                    st.pop();
+
+                    if(top == '+' || top == '-' || top == '*' || top == '/')
+                        hasOp = true;
+                }
+
+                st.pop(); // pop '('
+
+                if(!hasOp){
+                    check = true;
+                    break;
+                }
+            }
+            else{
+                st.push(c);   // thêm dòng này
+            }
+        }
+        if(check) cout << "Yes\n";
+        else cout << "No\n";
+    }
+}
