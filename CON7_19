@@ -1,0 +1,60 @@
+/*
+I  → increasing  → a[i] < a[i+1]
+D  → decreasing  → a[i] > a[i+1]
+Ví dụ:
+S = DD
+ta cần:
+a > b > c
+Số nhỏ nhất thỏa:
+321
+Bước 2: Nhận ra độ dài số cần tạo
+Nếu chuỗi có n ký tự
+→ ta cần n+1 chữ số
+Bước 4: Quan sát chuỗi D
+Ví dụ:
+DDD
+Ta cần:
+a > b > c > d
+Nếu ta viết tăng:
+1 2 3 4
+Muốn thỏa D D D thì phải đảo lại
+4 3 2 1
+Bước 6: Khi nào cần đảo?
+Ta chỉ cần đảo khi:
+kết thúc chuỗi D
+hoặc gặp I
+Ví dụ:
+DDI
+Ta có:
+1 2 3
+gặp I → đảo
+3 2 1
+*/
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+
+    int t;
+    cin >> t;
+    while (t--) {
+        string s;
+        cin >> s;
+        int n = s.size();
+        stack<int>st;
+        for(int i = 0; i<=n;i++){ //do s có size = n thì ta cần số có độ dài n+1
+            st.push(i+1); //do số bắt đầu từ 1
+            if(i == n || s[i] == 'I'){
+                while(!st.empty()){
+                    cout << st.top();
+                    st.pop();
+                }
+            }
+        }
+        cout << endl;
+    }
+    return 0;
+}
+
