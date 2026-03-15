@@ -1,0 +1,85 @@
+/*
+Cho biểu thức có n cặp ngoặc. Bạn được phép xóa hoặc 
+giữ mỗi cặp ngoặc, nhưng phải xóa cả hai ( và ) tương ứng cùng lúc — không được xóa một mình.
+(1 + (2 * (3+4)))
+Nếu xóa cặp ngoài và cặp giữa nhưng giữ cặp trong → 1 + 2 * (3+4) ✅
+Nếu xóa cặp trong mà giữ cặp ngoài → (1 + 2 * 3+4) — hợp lệ về cú pháp, nhưng có thay đổi giá trị không?
+→ Đây là điểm mấu chốt: bài này không yêu cầu giữ nguyên giá trị, 
+chỉ yêu cầu biểu thức cú pháp đúng (well-formed expression).
+ Vì vậy mọi cách xóa cặp ngoặc đều cho biểu thức hợp lệ — chỉ cần xóa đúng cặp.
+ Với (a*(b+c)) có 2 cặp, gọi là cặp A và cặp B:
+(a*(b+c))
+^       ^  → cặp A
+   ^ ^     → cặp B
+như nhị phân xóa cặp a giữ cặp b, xóa a xóa b, g a xóa b, g a g b-> 4 tập
+*/
+#include <bits/stdc++.h>
+using namespace std;
+
+bool ok = false;
+
+void sinh(int a[], int n){
+    int i = n-1;
+
+    while(i >= 0 && a[i] == 1){
+        a[i] = 0;
+        i--;
+    }
+
+    if(i < 0){
+        ok = true;
+        return;
+    }
+
+    a[i] = 1;
+}
+
+int main(){
+
+    string s;
+    cin >> s;
+
+    stack<int> st;
+    vector<pair<int,int>> p;
+
+    // tìm các cặp ngoặc
+    for(int i=0;i<s.size();i++){
+        if(s[i]=='(') st.push(i);
+        else if(s[i]==')'){
+            p.push_back({st.top(),i});
+            st.pop();
+        }
+    }
+
+    int n = p.size();
+
+    int a[n] = {0};
+
+    set<string> res;
+
+    sinh(a,n); // bỏ cấu hình 000...0
+
+    while(!ok){
+
+        vector<bool> del(s.size(),false);
+
+        for(int i=0;i<n;i++){
+            if(a[i]==1){
+                del[p[i].first] = true;
+                del[p[i].second] = true;
+            }
+        }
+
+        string t="";
+
+        for(int i=0;i<s.size();i++){
+            if(!del[i]) t+=s[i];
+        }
+
+        res.insert(t);
+
+        sinh(a,n);
+    }
+
+    for(auto &x:res) cout<<x<<"\n";
+}
