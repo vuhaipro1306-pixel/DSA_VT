@@ -1,0 +1,32 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(NULL);
+
+    vector<int> st;
+    string s;
+
+    while (getline(cin, s)) { 
+        if (s == "pop") {
+                if (!st.empty()) st.pop_back();
+            }
+        else if (s == "show") {
+                if (st.empty()) cout << "empty\n";
+            else {
+                for (int x : st) cout << x << " ";
+                cout << "\n";
+            }
+        }
+        else  {
+            int x = stoi(s.substr(5));
+            st.push_back(x);
+        }
+    }
+    return 0;
+}
+/*hàm substr lấy chuỗi con từ chuỗi mẹ là s cấu trúc hàm
+s.substr(vị trí bắt đầu, số kí tự);
+số kí tự để trống thì mặc định là lấy đến cuối chuỗi 
+*/
