@@ -1,0 +1,40 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+
+    int t;
+    cin >> t;
+    while (t--) {
+        int k; cin >> k;
+        string s; cin>> s;
+        // if(k >= s.size()){
+        //     cout << 0 << endl;
+        //     break; thêm vào không AC :))
+        // }
+        long long ans = 0;
+        map<char, int> mp;
+        for(auto x : s){
+            mp[x]++;
+        }
+        priority_queue<int> q;
+        for(auto x : mp){
+            q.push(x.second);
+        }
+        while(k > 0){
+            int top = q.top();
+            q.pop();
+            --top; --k;
+            q.push(top);
+        }
+        while(q.size()){
+            ans = ans + 1ll * q.top() * q.top();
+            q.pop();
+        }
+        cout << ans << endl;
+    }
+
+    return 0;
+}
