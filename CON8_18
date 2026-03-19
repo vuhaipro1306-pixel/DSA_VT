@@ -1,0 +1,57 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int a[501][501];
+int dx[4] = {-1,0,1,0};
+int dy[4] = {0,-1,0,1};
+
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    int t; cin >> t;
+    while(t--){
+    int n, m;
+    cin >> n >> m;
+    int cnt1 = 0;
+    memset(a, 0, sizeof(a));
+    queue<pair<int,int>> q;
+
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < m; j++) {
+            cin >> a[i][j];
+            if(a[i][j] == 1) ++cnt1;
+            if(a[i][j] == 2) q.push({i,j});
+        }
+    }
+
+    int day = 0;
+
+    while(!q.empty()){
+        int sz = q.size();
+        bool ok = false;
+
+        while(sz--){
+            pair<int,int> top = q.front();
+            q.pop();
+
+            for(int i = 0; i < 4; i++){
+                int u = top.first + dx[i];
+                int v = top.second + dy[i];
+
+                if(u >= 0 && u < n && v >= 0 && v < m && a[u][v] == 1){
+                    --cnt1;
+                    q.push({u,v});
+                    a[u][v] = 2;
+                    ok = true;
+                }
+            }
+        }
+
+        if(ok) ++day;
+    }
+
+    if(cnt1 > 0) cout << -1;
+    else cout << day;
+}
+    return 0;
+}
