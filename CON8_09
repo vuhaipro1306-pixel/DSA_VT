@@ -1,0 +1,45 @@
+#include <bits/stdc++.h>
+using namespace std;
+int visited[10005];
+int d[10005];
+int solve(int s, int e){
+    queue<int> q;
+    q.push(s);
+    visited[s] = 1;
+    // int cnt  = 0;
+    while(!q.empty()){
+        int a = q.front();
+        q.pop();
+        if(a == e){
+            return d[a];
+        }
+        int c = a-1;
+        int f = a * 2;
+        if(c > 0 && !visited[c]){
+            q.push(c);
+            visited[c] = 1;
+            d[c] = d[a] + 1; 
+        }
+        if(f > 0 && !visited[f]){
+            q.push(f);
+            visited[f] = 1;
+            d[f] = d[a] + 1;
+        }
+    }
+    return -1;
+}
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+
+    int t;
+    cin >> t;
+    while (t--) {
+        int s, e;
+        cin >> s >> e;
+        memset(d,0,sizeof(d));
+        memset(visited, 0, sizeof(visited));
+        cout << solve(s,e) <<endl;
+    }
+    return 0;
+}
