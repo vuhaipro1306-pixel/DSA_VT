@@ -1,0 +1,49 @@
+#include <bits/stdc++.h>
+using namespace std;
+map<char,int> mp; //lưu độ ưu tiên của các toán tử 
+void init(){
+    mp['+'] = mp['-'] = 1;
+    mp['*'] = mp['/'] = 2;
+    mp['^'] = 3;
+}
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    init();
+    int t;
+    cin >> t;
+    while (t--) {
+        string s;
+        cin >> s;
+        stack<char> q;
+        int size = s.size();
+        for(auto x : s){
+            if(x == '('){
+                q.push(x);
+            }
+            else if(x == ')'){ //in ra tất cả các toán tử
+                while(!q.empty() && q.top() != '('){
+                    cout << q.top();
+                    q.pop();
+                }
+                if(!q.empty()) q.pop(); //xóa dấu mở ngoặc thừa
+            }
+            else if(isalpha(x)){//kiem tra x co thuoc tu a-z A-Z khong
+                cout << x;
+            } 
+            else{ //gặp toán hạng 
+                while(!q.empty() && q.top() != '(' && mp[q.top()] >= mp[x]){
+                    cout << q.top();
+                    q.pop();
+                }
+                q.push(x);
+            }
+        }
+         while(!q.empty() && q.top() != '('){
+                cout << q.top();
+                q.pop();
+         }
+        cout << endl;
+    }   
+    return 0;
+}
