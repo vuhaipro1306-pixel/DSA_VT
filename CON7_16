@@ -1,0 +1,36 @@
+#include <bits/stdc++.h>
+using namespace std;
+/*
+bai này test case k chạy dc
+*/
+int init(char s, int a , int b){
+    if(s == '+' ) return a + b;
+    if(s == '-') return a - b; // thêm dòng này
+    if(s == '*') return a * b;
+    if(s == '/') return a / b;
+    return 0;
+}
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+
+    int t;
+    cin >> t;
+    while (t--) {
+        string s; cin >> s;
+        stack<int>st;
+        for(int i = 0; i<s.size(); i++){
+            if(isdigit(s[i])){
+                st.push(s[i] - '0');
+            }
+            else {
+                int v1 = st.top(); st.pop();
+                int v2 = st.top(); st.pop();
+                st.push(init(s[i],v2,v1)); //v2 đứng trước v1 trong biểu thức
+            }
+        }
+        cout << st.top() <<endl;
+    }
+
+    return 0;
+}
