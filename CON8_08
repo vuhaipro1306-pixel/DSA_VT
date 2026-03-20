@@ -1,0 +1,28 @@
+#include <bits/stdc++.h>
+using namespace std;
+string init(int n){
+    queue<string> q;
+    q.push("1");
+    while(!q.empty()){
+        string s = q.front();
+        q.pop();
+        if(s.size() > 10) break; //10 là đủ rồi
+        if(stoll(s) % n == 0){
+            return s;
+        }
+        q.push(s +"0"); q.push(s+"1");
+    }
+    return "-1";
+}
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+
+    int t;
+    cin >> t;
+    while (t--) {
+        int n; cin >> n;
+        cout << init(n) <<endl;
+    }
+    return 0;
+}
