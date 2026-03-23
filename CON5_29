@@ -1,0 +1,41 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int dp[50];
+
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+
+    int t; cin >> t;
+    while (t--) {
+        string s; cin >> s;
+
+        memset(dp, 0, sizeof(dp));
+
+        if (s[0] == '0') {
+            cout << 0 << endl;
+            continue;
+        }
+
+        dp[0] = 1;
+
+        for (int i = 1; i < s.size(); i++) {
+            // lấy 1 số
+            if (s[i] != '0') {
+                dp[i] += dp[i-1];
+            }
+
+            // lấy 2 số
+            string s1 = s.substr(i-1, 2);
+            if (s1[0] != '0' && stoi(s1) <= 26) { //số đằng trước != 0 thì ghép được
+                if (i >= 2) dp[i] += dp[i-2];
+                else dp[i] += 1; //nếu i = 1 thì có thể ghép vd 12 thì là a b hoặc ab -> 2 cách = dp[i]
+            }
+        }
+
+        cout << dp[s.size() - 1] << endl;
+    }
+
+    return 0;
+}
