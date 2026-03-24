@@ -1,0 +1,40 @@
+#include <bits/stdc++.h>
+using namespace std;
+int f[1005][1005];
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+
+    int t;
+    cin >> t;
+    while (t--) {
+        memset(f,0,sizeof(f));
+        string s; cin >> s;
+        int n = s.size();
+        s = " " + s; //tăng chiều diều của s lên
+        for(int i = 1; i<=n;i++){
+            f[i][i] = 1;
+        }
+        int res = 1;//kq chiều dài xâu đối xứng dài nhất
+        //d là chiều dài dãy con đối xứng
+        for(int d = 2; d <=n;d++){
+            for(int i = 1; i<=n-d+1;i++){ //n-(n-d+1)-1 có d phần tử chặn trên
+                int j = i+d-1; //i chỉ số bắt đầu, j chỉ số end
+                if(d == 2){
+                    if(s[i] == s[j]){
+                        f[i][j] = 1;
+                    }
+                }
+                    else{
+                        if(f[i+1][j-1] == 1 && s[i] == s[j]){
+                            f[i][j] = 1;
+                        }
+                    }
+                if(f[i][j] == 1) res = max(res, d);
+                }
+            }
+            cout << res << endl;
+        }
+
+    return 0;
+}
