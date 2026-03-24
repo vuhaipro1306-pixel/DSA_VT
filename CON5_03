@@ -13,7 +13,7 @@ int main() {
         int f[s+1] = {0};
         f[0] = 1;
         for(int x : a){
-            for(int j = s; j>= 0; j--){
+            for(int j = s; j>= x; j--){
                 if(f[j - x] == 1) f[j] = 1;
             }
         }
