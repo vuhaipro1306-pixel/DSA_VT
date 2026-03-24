@@ -1,0 +1,31 @@
+#include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+const int MOD = 1e9+7;
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+
+    int t;
+    cin >> t;
+    while (t--) {
+        int n, k; cin >> n >> k;
+        int a[n];
+        for(int &x : a) cin >> x;
+        ll f[k+1] = {0};
+        f[0] = 1;
+        for(int i = 1; i<=k;i++){ //duyệt theo tổng để xét mảng 
+            for(int x : a){
+                if(i - x == 0){
+                    f[i] = (f[i] + 1) % MOD;
+                }
+                else if(i - x > 0){
+                    f[i] = (f[i] + f[i - x]) % MOD;
+                }
+            }
+        }
+        cout << f[k] << endl;
+    }
+
+    return 0;
+}
