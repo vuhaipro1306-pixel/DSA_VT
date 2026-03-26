@@ -2,6 +2,10 @@
 using namespace std;
 long long dp[1005][1005];
 int const MOD = 1e9+7;
+/*
+nCk = (n-1)*C(k-1) + (n-1)*C(k);
+nCn = 1 && nC0 =1
+*/
 int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
