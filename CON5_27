@@ -1,0 +1,25 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+
+    int t;
+    cin >> t;
+    while (t--) {
+        int n, k; cin >> n >>k;
+        int a[n], c[n]; //c giá trị của đồ vật, a là khối lượng của vật
+        for(int &x : a) cin >> x;
+        for(int &x : c) cin >> x;
+        int f[k+1] = {0};//giá trị lớn nhất khi túi có thể tích là i
+        for(int i = 0; i<n;i++){
+            for(int j = k; j>= a[i]; j--){
+                f[j] = max(f[j], f[j-a[i]] + c[i]); 
+            }
+        }
+        cout << f[k] <<endl;
+    }
+
+    return 0;
+}
