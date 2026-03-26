@@ -1,0 +1,28 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+
+    int t;
+    cin >> t;
+    while (t--) {
+        int n; cin >> n;
+        int dp[n+1] = {0};
+        dp[0] = 1;
+        int a[3] = {1, 2, 3};
+        for(int i = 1; i<=n;i++){
+            for(auto x : a){
+                if(i - x == 0){
+                    dp[i]++;
+                }
+                else if(i - x > 0){
+                    dp[i] += dp[i-x];
+                }
+            }
+        }
+        cout << dp[n] <<endl;
+    }
+    return 0;
+}
