@@ -1,6 +1,55 @@
 #include <bits/stdc++.h>
 using namespace std;
-
+/*
+🔹 Khởi tạo
+dp[0] = 1
+👉 nghĩa là:
+có 1 cách để đứng yên (không nhảy)
+🧩 Bước i = 1
+dp[1] = dp[0]
+👉 từ 0 nhảy 1 bước
+Các cách:
+[1]
+👉 dp[1] = 1
+🧩 Bước i = 2
+dp[2] = dp[1] + dp[0]
+👉 từ:
+bước 1 → nhảy 1
+bước 0 → nhảy 2
+Các tổ hợp:
+Từ dp[1]:
+[1] → thêm 1 → [1,1]
+Từ dp[0]:
+[] → thêm 2 → [2]
+👉 Tổng:
+[1,1]
+[2]
+👉 dp[2] = 2
+🧩 Bước i = 3 (quan trọng nhất)
+dp[3] = dp[2] + dp[1] + dp[0]
+👉 tương ứng:
+từ 2 → nhảy 1
+từ 1 → nhảy 2
+từ 0 → nhảy 3
+🔥 Sinh tổ hợp
+1️⃣ Từ dp[2] (thêm 1)
+dp[2] có:
+[1,1]
+[2]
+👉 thêm 1:
+[1,1,1]
+[2,1]
+2️⃣ Từ dp[1] (thêm 2)
+dp[1] có:
+[1]
+👉 thêm 2:
+[1,2]
+3️⃣ Từ dp[0] (thêm 3)
+dp[0]:
+[]
+👉 thêm 3:
+[3]
+*/
 int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
