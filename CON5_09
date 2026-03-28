@@ -1,0 +1,45 @@
+#include <bits/stdc++.h>
+using namespace std;
+/*
+i: là số chữ số
+j: tổng số có i chữ số
+dp[i][j]: số các số có i chữ số và có tổng bằng j 
+dp[0][j] = 0, dp[i][0] = 0, dp[1][j] = 1;
+dp[i][j] += các số có i -1 chữ số và [j-so]
+*/
+int n, k;
+int MOD = 1e9+7;
+int dp[102][50004];
+void init(){
+    //dp[1][0] = 0; //số có 1 chữ số và tổng = 0
+    //dp[0][0] = 0;
+    for(int i = 0; i<=101;i++){ //số có i chữ số có tổng = 0
+        dp[i][0] = 0;
+    }
+    for(int i = 1; i <= 50004;i++){
+        dp[0][i] = 0; // số có 0 chữ số mà tổng  = i;
+    }
+    for(int i = 1; i<=9;i++){
+        dp[1][i] = 1; //số có 1 chữ số và tổng bằng i 
+    }
+    for(int i = 1; i<= 100;i++){
+        for(int so = 0; so <= 9;so++){
+            for(int j = so; j<=50004;j++){
+                dp[i][j] = (dp[i-1][j-so] %MOD + dp[i][j] % MOD) % MOD;
+            }
+        }
+    }
+}
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    init();
+    int t;
+    cin >> t;
+    while (t--) {
+        cin >> n >> k;
+        cout << dp[n][k] <<endl;
+    }
+
+    return 0;
+}
