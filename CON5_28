@@ -1,0 +1,37 @@
+#include <bits/stdc++.h>
+using namespace std;
+//dp[i][[j]: la số cách ít nhất để biến đổi str1 có độ dài là i thành str2 có độ dài là j 
+// làm theo cách này thì 9/10 test
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+
+    int t;
+    cin >> t;
+    while (t--) {
+        string s1, s2;
+        cin >> s1 >> s2;
+        int n = s1.size(), m = s2.size();
+        int dp[n+1][m+1];
+        for(int i = 0; i<=m;i++){
+            dp[0][i] = i; //str1 có 0 kí tự str2 có i kí tự thì số cách là thêm i kí tự
+        }
+        for(int i = 0; i<=n;i++){
+            dp[i][0] = i; //str1 có i kí tự, str2 có 0 kí tự thì số cách là xóa i kí tự 
+        }
+        for(int i = 1; i<=n;i++){
+            for(int j = 1; j <= m;j++){
+                if(s1[i-1] == s2[j-1]){
+                    dp[i][j] = dp[i-1][j-1];
+                }
+                else{
+                    dp[i][j] = min(dp[i-1][j-1], min(dp[i-1][j], dp[i][j-1])) + 1;
+                    //dp[i-1] xóa phần tử, dp[i-1][j-1] thay pần tử, dp[i][j-1] thêm phần tử
+                }
+            }
+        }
+        cout << dp[s1.size()][s2.size()] << endl;
+    }
+
+    return 0;
+}
