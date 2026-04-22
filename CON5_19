@@ -1,0 +1,52 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+typedef pair<int, int> ii;
+const int INF = 1e9;
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(NULL);
+
+    int t;
+    cin >> t;
+    while (t--) {
+        int n, x, y, z;
+        cin >> n >> x >> y >> z;
+
+        int MAX = 2 * n; // giới hạn trạng thái
+
+        vector<int> d(MAX + 1, INF); //tạo vector là khoảng cách đi tới đỉnh thứ i là ngắn nhất 
+        priority_queue<ii, vector<ii>, greater<ii>> q;
+
+        // bắt đầu từ 0 ký tự
+        d[0] = 0;
+        q.push({0, 0});
+        while (!q.empty()) {
+            auto t = q.top(); q.pop();
+            int dis = t.first; int u = t.second; //dis là trục thời gian, u là đỉnh thứ i đi tới
+            if (dis > d[u]) continue; //tức là đường d[u] tối ưu hơn
+            // insert
+            if (u + 1 <= MAX && d[u + 1] > dis + x) { //inset mất thời gian là x 
+                d[u + 1] = dis + x;
+                q.push({d[u + 1], u + 1});
+            }
+
+            // delete
+            if (u - 1 >= 0 && d[u - 1] > dis + y) { //xóa mất thời gian là y
+                d[u - 1] = dis + y;
+                q.push({d[u - 1], u - 1});
+            }
+
+            // copy
+            if (u * 2 <= MAX && d[u * 2] > dis + z) {
+                d[u * 2] = dis + z;
+                q.push({d[u * 2], u * 2});
+            }
+        }
+
+        cout << d[n] << '\n';
+    }
+
+    return 0;
+}
