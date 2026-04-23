@@ -1,0 +1,36 @@
+#include <bits/stdc++.h>
+using namespace std;
+//f[i][j] là số cách từ vị trí i j về 0 0
+//từ vị trí i j chỉ có thể đi về i-1 j và i j-1 
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+
+    long long F[30][30];
+    memset(F, 0, sizeof(F));
+
+    // Khởi tạo
+    for (int i = 0; i <= 25; i++) //từ vị trí (i, 0) thì cách trở về 0, 0 là i-1,0 -> 0
+        F[i][0] = 1;
+
+    for (int j = 0; j <= 25; j++) // tương tự (0,i)
+        F[0][j] = 1;
+        F[0][0] = 1; //nếu ở vị trí 0,0 thì chỉ có 1 cách là o đi gì
+    // DP
+    for (int i = 0; i <= 25; i++) {
+        for (int j = 0; j <= 25; j++) {
+            if (i == 0 || j == 0) continue;
+            F[i][j] = F[i][j-1] + F[i-1][j];
+        }
+    }
+
+    int t;
+    cin >> t;
+    while (t--) {
+        int n, m;
+        cin >> n >> m;
+        cout << F[n][m] << '\n';
+    }
+
+    return 0;
+}
