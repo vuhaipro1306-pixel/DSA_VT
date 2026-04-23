@@ -1,0 +1,53 @@
+#include <bits/stdc++.h>
+using namespace std;
+/*
+tại mỗi điểm i ta cần LIS dãy tăng dần kết thúc tại i
+lds dãy giảm dần bắt đầu từ i
+tại mỗi điểm i tìm max = lís[i] = lds[i] - a[i] vì a[i] tính 2 lần 
+*/
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    int t;
+    cin >> t;
+    while (t--) {
+        int n; cin >> n;
+        int a[n]; 
+        for(int i = 0; i<n;i++){
+            cin >> a[i];
+        }
+        vector<int> dp(n);
+        vector<int> LSI(a, a+n);
+        vector<int> LDS(a, a+n);
+        //dãy con tăng dài nhất kết thúc tại i
+        for(int i = 1; i< n;i++){
+            for(int j = 0 ; j < i;j++){
+                if(a[j] < a[i]){
+                LSI[i] = max(LSI[i], LSI[j] + a[i]);
+                }
+            }
+        }
+        //dãy con giảm có tổng lớn nhất bắt đầu từ i 
+        // for(int i = 0; i<n;i++){
+        //     for(int j = i+1; j<n;j++){
+        //         if(a[j] < a[i]) {
+        //             LDS[i] = max(LDS[i], LDS[j] + a[i]);
+        //         }
+        //     }
+        // } sai vì lds[j] chưa kịp tính 
+        for(int i = n-1; i>=0;i--){
+            for(int j = i+1; j<n;j++){
+                if(a[j] < a[i]){
+                    LDS[i] = max(LDS[i], LDS[j] + a[i]);
+                }
+            }
+        }
+        for(int i = 0; i<n;i++){
+            dp[i] = LSI[i] + LDS[i] - a[i];
+        }
+        int max = *max_element(dp.begin(), dp.end());
+        cout << max <<endl;
+    }
+
+    return 0;
+}
