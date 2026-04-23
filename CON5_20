@@ -1,0 +1,31 @@
+#include <bits/stdc++.h>
+using namespace std;
+//mỗi số đóng góp:
+ /*
+    i = 0 1: 1 
+    i = 1 12 2
+    i = 2 23 3 đóng góp (i+1) * số đó   
+    số đằng sau dịch sang trái(*10) + số đó đóng góp   
+*/
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+
+    int t;
+    cin >> t;
+    while (t--) {
+        string s; cin >> s;
+        int n = s.size();
+        vector<int>dp(n, 0); //dp có n phần tử và khởi tạo bằng 0
+        dp[0] = s[0] - '0';
+        long long res = dp[0];
+        for(int i = 1; i<n;i++){
+            int digit = s[i] - '0';
+            dp[i] = dp[i-1] * 10 + (i+1) * digit;
+            res += dp[i];
+        }
+        cout << res <<endl;
+    }
+
+    return 0;
+}
