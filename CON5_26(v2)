@@ -1,0 +1,29 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+const int MAX = 25005;
+//dp[max] tức là có max bit và mỗi bit có 1 or 0, tức là có thể đạt được giá trị tại đó hoặc o đạt được 
+int main() {
+    int t; cin >> t;
+    while (t--) {
+        int C, N;
+        cin >> C >> N;
+
+        vector<int> w(N);
+        for (auto &x : w) cin >> x;
+
+        bitset<MAX> dp;
+        dp[0] = 1;
+
+        for (auto x : w) {
+            dp |= (dp << x);
+        }
+        // nếu trước đó đạt được tổng bằng s thì bây giờ là s+x ví dụ bit 0 = 1 và 3 = 1dịch trái sang 2 -> 2 = 1 và 5 = 1 cộng thêm không nhân 
+        for (int i = C; i >= 0; i--) {
+            if (dp[i]) {
+                cout << i << endl;
+                break;
+            }
+        }
+    }
+}
