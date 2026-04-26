@@ -1,0 +1,67 @@
+#include <bits/stdc++.h>
+using namespace std;
+bool valid(string s){
+    int cnt = 0;
+    for(auto x : s){
+        if(x == '('){
+            cnt++;
+        }
+        else if(x == ')'){
+            cnt--;
+            if(cnt < 0) return false;
+        }
+    }
+    if(cnt == 0) return true;
+    return 0;
+
+}
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    int t;
+    cin >> t;
+    
+    while (t--) {
+        string s;
+        cin >> s;
+        queue<string> q;
+        vector<string> v;
+        set<string> se;
+        q.push(s);
+        bool check = false;
+        while(!q.empty() && !check){
+            int sz = q.size(); //kích thước của mỗi level 
+            /* ví dụ không có thì có chuỗi level 1 A B C D nếu A B  không thỏa mã
+            -> push A1 A2 B1 B2 là chuỗi level 2 và C D là hợp lý nhưng mà nó vẫn xử lý thêm A1 A2 B1 b2 LÀ LEVEL 2
+            */
+           while(sz--){
+                string s1 = q.front(); q.pop();
+                if(valid(s1)){ //nếu thỏa mãn là chuỗi đúng
+                    check = true;
+                    v.push_back(s1);
+                }
+                if(!check){
+                    for(int i = 0; i< s1.size();i++){
+                        if(s1[i] != '(' && s1[i] != ')'){ //là kí tự
+                            continue;
+                        }
+                        string s2 = s1.substr(0, i) + s1.substr(i+1); //substr lấy i kí tự bắt đầu từ index
+                        if(!se.count(s2)){ //chưa có trong set(xóa ở các index khác nhau có thể cho ra chung 1 chuỗi con)
+                            se.insert(s2);
+                            q.push(s2);
+                        }   
+                    }
+                }
+           }
+        }
+        if(v.empty()){
+            cout << -1 <<endl;
+        }
+        else {
+            sort(v.begin(), v.end());
+            for(auto x : v) cout << x <<" ";
+        }
+        cout << endl;
+    }
+    return 0;
+}
