@@ -1,0 +1,42 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+
+    int t; cin >> t;
+    while(t--){
+        int n;
+        cin >> n;
+
+        int a[n];
+        for(auto &x : a) cin >> x;
+
+        vector<vector<int>> res;
+
+        // bước 0
+        res.push_back({a[0]});
+
+        for(int i = 1; i < n; i++){
+            if(a[i] < a[i-1]){
+                int j = i;
+                while(j > 0){
+                    if(a[j] < a[j-1]){
+                        swap(a[j], a[j-1]);
+                        --j;
+                    }
+                    else break;
+                }
+            }
+            res.push_back(vector<int>(a, a + i + 1));
+        }
+        for(int i = res.size() - 1; i >= 0; i--){
+            cout << "Buoc " << i << ": ";
+            for(int x : res[i]) cout << x << " ";
+            cout << endl;
+        }
+    }
+
+    return 0;
+}
