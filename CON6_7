@@ -1,0 +1,36 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+
+    int t;
+    cin >> t;
+    while (t--) {
+        int n; cin >> n;
+        vector<int> a(n);
+        for(auto &x : a) cin >> x;
+
+        int l = 0, r = n - 1;
+
+        while(l < n - 1 && a[l] <= a[l+1]) ++l;
+
+        if(l == n - 1){
+            cout << "1 1\n";
+            continue;
+        }
+
+        while(r > 0 && a[r] >= a[r-1]) --r;
+
+        int min_a = *min_element(a.begin() + l, a.begin() + r + 1);
+        int max_a = *max_element(a.begin() + l, a.begin() + r + 1);
+
+        while(l > 0 && a[l-1] > min_a) --l;
+        while(r < n - 1 && a[r+1] < max_a) ++r;
+
+        cout << l + 1 << " " << r + 1 << endl;
+    }
+
+    return 0;
+}
