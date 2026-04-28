@@ -1,0 +1,80 @@
+/*
+với x = 0: không có trường hợp
+với x = 1: y = 0
+với y = 1; x > 1
+x^y > y^x -> log(x^y) > log(y^x) -> logx/x > logy/y
+và bấm máy tính nhận thấy f(x) = logx / x giảm dần khi x > 3
+-> x > y -> thường sai 
+-> y > x -> thường đúng
+các th đặc biệt
+nếu x = 2 thì chỉ có  trường hợp thỏa mãn là x = 2 và y = 1, y >= 5
+
+*/
+#include <bits/stdc++.h>
+using namespace std;
+
+int n, m;
+
+int dem(int x, vector<int> &b, int cnt[]) {
+    if (x == 0) return 0;
+    if (x == 1) return cnt[0];
+
+    int cnt_pair = 0;
+
+    // tìm first b[mid] > x
+    int l = 0, r = m - 1, index = m;
+    while (l <= r) {
+        int mid = (l + r) / 2;
+        if (b[mid] > x) {
+            index = mid;
+            r = mid - 1;
+        } else l = mid + 1;
+    }
+
+    cnt_pair += (m - index);//số phần tử lớn hơn x
+
+    // cộng y = 0, 1
+    cnt_pair += cnt[0] + cnt[1];//2 trường hợp đặt biệt với y = 0, y = 1 luôn đúng với mọi x > 1
+
+    // ngoại lệ
+    if (x == 2) {
+        cnt_pair -= (cnt[3] + cnt[4]);//x = 2 chỉ có 2 trường hợp là y = 1 và y >= 5 là đúng
+    }
+
+    if (x == 3) {
+        cnt_pair += cnt[2]; //trường hợp x = 3 có thêm y = 2 thỏa mãn
+    }
+
+    return cnt_pair;
+}
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(NULL);
+
+    int t;
+    cin >> t;
+    while (t--) {
+        cin >> n >> m;
+
+        vector<int> a(n), b(m);
+        int cnt[5] = {0};
+
+        for (int &x : a) cin >> x;
+
+        for (int &x : b) {
+            cin >> x;
+            if (x < 5) cnt[x]++;
+        }
+
+        sort(b.begin(), b.end());
+
+        long long res = 0;
+
+        for (int x : a) {
+            res += dem(x, b, cnt);
+        }
+
+        cout << res << "\n";
+    }
+}
