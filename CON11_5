@@ -1,0 +1,77 @@
+#include <bits/stdc++.h>
+using namespace std;
+//dề sai cách duyệt 
+struct Node {
+    int val;
+    Node *left, *right;
+
+    Node(int x){
+        val = x;
+        left = right = NULL;
+    }
+};
+
+typedef Node* node;
+
+void makeNode(node root, int u, int v, char c){
+    if(c == 'L')
+        root->left = new Node(v);
+    else
+        root->right = new Node(v);
+}
+
+void Insert(node root, int u, int v, char c){
+    if(root == NULL) return;
+
+    if(root->val == u){
+        makeNode(root, u, v, c);
+        return;
+    }
+
+    Insert(root->left, u, v, c);
+    Insert(root->right, u, v, c);
+}
+
+void duyet(node root){
+    if(root == NULL) return;
+
+    cout << root->val << " ";
+
+    duyet(root->left);
+    duyet(root->right);
+}
+
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+
+    int t;
+    cin >> t;
+
+    while (t--) {
+        int n;
+        cin >> n;
+
+        node root = NULL;
+
+        while(n--){
+            int u, v;
+            char c;
+
+            cin >> u >> v >> c;
+
+            if(root == NULL){
+                root = new Node(u);
+                makeNode(root, u, v, c);
+            }
+            else{
+                Insert(root, u, v, c);
+            }
+        }
+
+        duyet(root);
+        cout << endl;
+    }
+
+    return 0;
+}
