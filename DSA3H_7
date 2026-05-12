@@ -1,0 +1,103 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+struct Node{
+    int data;
+    Node *left, *right;
+
+    Node(int x){
+        data = x;
+        left = right = NULL;
+    }
+};
+
+typedef Node* node;
+
+//////////////////////////////////////////////////////
+
+node insert(node root, int x){
+
+    if(root == NULL)
+        return new Node(x);
+
+    if(x < root->data)
+        root->left = insert(root->left, x);
+    else
+        root->right = insert(root->right, x);
+
+    return root;
+}
+
+//////////////////////////////////////////////////////
+
+bool search(node root, int x){
+
+    while(root){
+
+        if(root->data == x)
+            return true;
+
+        if(x < root->data)
+            root = root->left;
+        else
+            root = root->right;
+    }
+
+    return false;
+}
+
+//////////////////////////////////////////////////////
+
+int LCA(node root, int u, int v){
+
+    while(root){
+
+        if(u < root->data && v < root->data)
+            root = root->left;
+
+        else if(u > root->data && v > root->data)
+            root = root->right;
+
+        else
+            return root->data;
+    }
+
+    return -1;
+}
+
+//////////////////////////////////////////////////////
+
+int main(){
+
+    ios::sync_with_stdio(false);
+    cin.tie(NULL);
+
+    int t;
+    cin >> t;
+
+    while(t--){
+
+        int n, q;
+        cin >> n >> q;
+
+        node root = NULL;
+
+        for(int i=0;i<n;i++){
+            int x;
+            cin >> x;
+            root = insert(root, x);
+        }
+
+        while(q--){
+
+            int u, v;
+            cin >> u >> v;
+
+            if(!search(root,u) || !search(root,v))
+                cout << -1 << '\n';
+            else
+                cout << LCA(root,u,v) << '\n';
+        }
+    }
+    return 0;
+}
