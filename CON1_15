@@ -1,0 +1,25 @@
+#include <bits/stdc++.h>
+using namespace std;
+int main(){
+    int t; cin >> t;
+    while(t--){
+        int index; cin >> index;
+        string s; cin >> s;
+        int j = s.size()-1-1;
+        while(j >= 0 && s[j] >= s[j+1]){
+            --j;
+        }
+        if(j < 0) {
+            cout << index <<" " <<"BIGGEST" << endl;
+        }
+        else {
+            //tìm thằng đầu tiên từ n mà lớn hơn s[j]
+            int i = s.size()-1;
+            while(s[i] <= s[j]) --i;
+            swap(s[i], s[j]);
+            reverse(s.begin() + j + 1, s.end());
+            cout << index <<" "<< s << endl;
+        }
+    }
+    return 0;
+}
