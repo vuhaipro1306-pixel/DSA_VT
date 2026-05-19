@@ -1,0 +1,33 @@
+#include <bits/stdc++.h> 
+using namespace std;
+int main (){
+    int n, k; cin >> n >> k;
+    int a[n+1][n+1], b[n+1];
+    for(int i = 1; i<=n;i++){
+        for(int j=1; j<=n;j++) cin >> a[i][j];
+    }
+    for(int i = 1; i<=n;i++) b[i] = i;
+    vector<vector<int>>v;//lưu mảng sinh
+    vector<vector<int>>res; //lưu kết quả
+    v.push_back(vector<int>(b+1, b+n+1)); //vì index bđ từ 1
+    while(1){
+        if(next_permutation(b+1, b+n+1)){
+            v.push_back(vector<int>(b+1, b+n+1));
+        }
+        else break;
+    }
+    for(int i = 0; i<v.size();i++){
+        int tong = 0;
+        for(int j = 1; j<=n;j++){
+            tong += a[j][v[i][j-1]]; //vì vector bắt đầu từ index = 0 cho dù copy từ index = 1
+        }
+        if(tong == k) res.push_back(v[i]);
+    }
+    cout << res.size() <<endl;
+    for(auto x : res){
+        for(int i : x){
+            cout << i <<" ";
+        }
+        cout << endl;
+    }
+}
