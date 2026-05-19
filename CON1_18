@@ -1,0 +1,21 @@
+#include <bits/stdc++.h>
+using namespace std;
+int main (){
+    int t; cin >> t;
+    while(t--){
+        int n, s;
+        cin >> n >> s;
+        int a[n];
+        vector<int>dp(s+1, INT_MAX); //tạo mảng có S phần từ và ban đầu là max
+        dp[0] = 0; //số cách chọn ít nhất i tờ tiền để đạt được tổng k
+        for(int &x : a) cin >> x;
+        for(auto x : a){
+            for(int i = s; i >= x; i--){
+                if(dp[i-x] != INT_MAX)
+                dp[i] = min(dp[i], dp[i-x] + 1);
+            }
+        }
+        cout << dp[s]<<endl;
+    }
+    return 0;
+}
