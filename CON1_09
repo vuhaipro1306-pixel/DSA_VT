@@ -1,0 +1,43 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+    int t;
+    cin >> t;
+
+    while (t--) {
+        int n;
+        cin >> n;
+
+        vector<string> gray;
+
+        gray.push_back("0");
+        gray.push_back("1");
+
+        for (int i = 2; i <= n; i++) {
+
+            int sz = gray.size();
+
+            // duyệt ngược để tạo nửa sau
+            for (int j = sz - 1; j >= 0; j--) {
+                gray.push_back(gray[j]);
+            }
+
+            // thêm 0 vào nửa đầu
+            for (int j = 0; j < sz; j++) {
+                gray[j] = "0" + gray[j];
+            }
+
+            // thêm 1 vào nửa sau
+            for (int j = sz; j < 2 * sz; j++) {
+                gray[j] = "1" + gray[j];
+            }
+        }
+
+        for (string x : gray) {
+            cout << x << " ";
+        }
+
+        cout << endl;
+    }
+}
