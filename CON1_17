@@ -1,0 +1,26 @@
+#include <bits/stdc++.h>
+using namespace std;
+//xử lý số lớn ở dòng 15 (a*b) mod = amod *b mod
+int main(){
+    int t; cin >> t;
+    while(t--){
+        int n; cin >> n;
+        queue<string>q;
+        q.push("9");
+        while(!q.empty()){
+            string top = q.front();
+            q.pop();
+            long long res = 0;
+            for(auto x : top){
+                res = (res * 10 + x - '0')%n;
+            }
+            if(res == 0){
+                cout << top <<endl;
+                break;
+            }
+            q.push(top +"0");
+            q.push(top +"9");
+        }
+    }
+    return 0;
+}
