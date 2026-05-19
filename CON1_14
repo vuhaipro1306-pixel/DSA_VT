@@ -1,0 +1,39 @@
+#include <bits/stdc++.h> 
+using namespace std;
+int main (){
+    int t; cin >> t;
+    while(t--){
+        int n, k;
+       	cin >> n >> k;
+        int a[k+1]; //bắt đầu từ 1
+        for(int i = 1; i<=k;i++) {
+            int x; cin >> x;
+            a[i] = x;
+        }
+        vector<int> v(a+1, a+k+1); //lấy index của a từ 1 đến k và đưa vào vector
+        int j = k;
+        while(j >= 1 && a[j] == n-k+j){
+            --j;
+        }
+        if(j == 0){
+            cout << k << endl;
+        }
+        else {
+            a[j]++;
+            for(int i = j+1; i<=k;i++){
+                a[i] =  a[i-1]+1;
+            }
+            int cnt = 0;
+            set<int> se;
+            for(int i = 1; i<=k;i++){
+                se.insert(a[i]);
+            }
+            for(auto x : v){
+                if(se.find(x) == se.end()) //người đó được nghỉ
+                    ++cnt;
+            }
+            cout << cnt << endl;
+        }
+    }
+    return 0;
+}
