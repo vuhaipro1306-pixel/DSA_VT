@@ -1,0 +1,33 @@
+#include <bits/stdc++.h>
+using namespace std;
+int n, k, a[100];
+vector<vector<int>> v;
+void sinh(int i){
+    for(int j = 0; j<=1;j++){
+        a[i] = j;
+    if(i == n-1){
+        int cnt = 0;
+        for(int t = 0; t <n-1;t++){
+            if(a[t] == 1) ++cnt;
+        }
+        if(cnt == k){
+            v.push_back(vector<int>(a, a+n));
+        }
+    }
+    else {
+        sinh(i+1);
+        }
+      }
+   }
+int main (){
+    int t; cin >> t;
+    while(t--){
+        cin >> n >> k;
+        v.clear();
+        sinh(0);
+        for(auto x : v){
+            for(auto i : x) cout << i;
+            cout << endl;
+        }
+    }
+}
