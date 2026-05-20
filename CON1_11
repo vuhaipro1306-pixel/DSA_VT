@@ -1,0 +1,21 @@
+#include <bits/stdc++.h> 
+//đỏi từ nhị phân sang gray Gi = Bi xor Bi-1 G0 = B0
+//đổi tử gray sang nphan Bi = Gi xor Bi-1 bit đầu như nhau
+using namespace std;
+int main (){
+    int t; cin >> t;
+    while(t--){
+        string s; cin >> s;
+        vector<string> res;
+        res.push_back(string(1,s[0]));
+        int sz = s.size();
+        for(int i = 1; i<sz;i++){
+            if(string(1,s[i])!=res[i-1]){
+                res.push_back("1");
+            }
+            else res.push_back("0");
+		}
+        for(auto x:res) cout << x;
+        cout <<endl;
+    }
+}
