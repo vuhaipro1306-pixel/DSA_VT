@@ -1,0 +1,50 @@
+#include <bits/stdc++.h>
+using namespace std;
+int a[10005];
+int n, p, s;
+vector<vector<int>> res;
+vector<int> v;
+void sinh(){
+    a[0] = 1;
+    a[1] = 1;
+    for(int i = 2; i*i <= 10005;i++){
+        if(a[i] == 0){
+            for(int j = i*2; j<=10005;j+=i){
+            	a[j] = 1;
+       		 }
+        }
+    }
+}
+void Try(int index, int tong, int start){
+    if(index == n && tong == s){
+        res.push_back(v);
+        return;
+    }
+    else {
+        for(int i = start; i<=10005;i++){
+            if(i > p && a[i] == 0){
+                if(tong + i <= s) {
+                    v.push_back(i);
+                    Try(index + 1, tong + i, i+1);
+                    v.pop_back(); //quay lui
+                }
+                else return;
+            }
+        }        
+    }
+}
+int main(){
+    int t; cin >> t;
+    sinh();
+    while(t--){
+        cin >> n >> p >> s;
+        res.clear();
+        v.clear();
+        Try(0, 0, 2);
+        cout << res.size() <<endl;
+        for(auto x : res){
+            for(auto i : x) cout << i << " ";
+            cout << endl;
+        }
+    }
+}
