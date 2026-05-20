@@ -1,0 +1,19 @@
+#include <bits/stdc++.h> 
+using namespace std;
+int main (){
+    int t; cin >> t;
+    while(t--){
+        string s; cin >> s;
+        vector<string> res;
+        res.push_back(string(1,s[0]));
+        int sz = s.size();
+        for(int i = 1; i<sz;i++){
+            if(s[i]!=s[i-1]){
+                res.push_back("1");
+            }
+            else res.push_back("0");
+		}
+        for(auto x:res) cout << x;
+        cout <<endl;
+    }
+}
