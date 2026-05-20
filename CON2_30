@@ -16,7 +16,8 @@ void sinh(){
     }
 }
 void Try(int index, int tong, int start){
-    if(index == n && tong == s){
+    if(index == n){
+        if(tong == s)
         res.push_back(v);
         return;
     }
