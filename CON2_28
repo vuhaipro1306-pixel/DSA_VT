@@ -1,0 +1,72 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int n, x;
+int a[25];
+
+vector<vector<int>> v;
+vector<int> res;
+
+void Try(int tong, int start){
+
+    if(tong == x){
+        v.push_back(res);
+        return;
+    }
+
+    for(int i = start; i < n; i++){
+
+        if(tong + a[i] <= x){
+
+            res.push_back(a[i]);
+
+            Try(tong + a[i], i);
+
+            res.pop_back();
+        }
+    }
+}
+
+int main(){
+
+    int t;
+    cin >> t;
+
+    while(t--){
+
+        cin >> n >> x;
+
+        for(int i = 0; i < n; i++)
+            cin >> a[i];
+//chú ý sort trư
+        sort(a, a + n);
+
+        res.clear();
+        v.clear();
+
+        Try(0, 0);
+
+        if(v.empty()){
+            cout << -1;
+        }
+        else{
+
+            for(int i = 0; i < v.size(); i++){
+
+                cout << "[";
+
+                for(int j = 0; j < v[i].size(); j++){
+
+                    if(j != v[i].size() - 1)
+                        cout << v[i][j] << " ";
+                    else
+                        cout << v[i][j];
+                }
+
+                cout << "]";
+            }
+        }
+
+        cout << endl;
+    }
+}
