@@ -1,0 +1,33 @@
+#include <bits/stdc++.h>
+using namespace std;
+string s;
+int check[20];
+int a[20];
+void Try(int index){
+    if(index == s.size()){
+        for(int i = 0; i<s.size();i++){
+            cout << s[a[i]];
+        }
+        cout << " ";
+    }
+    else {
+        for(int i = 0; i<s.size();i++){
+            if(check[i] == 0){
+                a[index] = i;
+                check[i] = 1;
+                Try(index + 1);
+                check[i] = 0;
+            }
+        }
+    }
+}
+int main(){
+    int t; cin >> t;
+    while(t--){
+        cin >> s;
+        memset(check, 0, sizeof(check));
+        //check[0] = 1;
+        Try(0);
+        cout << endl;
+    }
+}
