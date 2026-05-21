@@ -1,0 +1,55 @@
+#include <bits/stdc++.h> 
+using namespace std;
+int k, n, m;
+map<string, int> mp;
+vector<string> se;
+char a[4][4]; //ma trận kí tự
+int check[4][4]; //đánh dấu ô đã thăm
+int x[8] = {0, 0, -1, 1, 1, 1,-1, -1};
+int y[8] = {-1, 1, 0, 0, -1, 1, -1, 1};
+void Try(int u, int v, string c){
+    if(mp[c] > 0){
+        se.push_back(c);
+        mp[c] = 0;
+    }
+    for(int  i = 0; i<8;i++){
+        int u1 = u + x[i];
+        int v1 = v + y[i];
+        if(u1 >= 0 && u1 < n && v1 >= 0 && v1 < m && check[u1][v1] == 0){
+            check[u1][v1] = 1;
+            Try(u1, v1, c + a[u1][v1]);
+            check[u1][v1] = 0; //backtrack
+        }
+    }
+}
+int main (){
+    int t; cin >> t;
+    while(t--){
+        cin >> k >> n >> m;
+        mp.clear();
+        se.clear();
+        memset(check, 0, sizeof(check));
+        while(k--){
+            string s; cin >> s;
+            mp[s]++;
+        }
+        for(int i = 0; i<n;i++){
+            for(int j = 0; j<m;j++){
+                cin >> a[i][j];
+            }
+        }
+        string s = "";
+        for(int i = 0; i < n;i++){
+            for(int j = 0; j<m;j++){
+                check[i][j] = 1;
+                Try(i, j, s + a[i][j]);
+                check[i][j] = 0;
+            }
+        }
+        if(!se.empty()){
+            for(auto x : se) cout << x <<" ";
+            cout << endl;
+        }
+        else cout << -1 <<endl;
+    }
+}
