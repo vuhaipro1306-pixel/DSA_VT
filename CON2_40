@@ -1,0 +1,63 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int check[20];
+int n;
+int a[20][20];
+int kq, cmin;
+vector<int> res;
+void Try(int u, int tong){
+    if(u == n){
+        kq = min(kq, tong + a[res.back()][1]);
+        return;
+    }
+
+    int v = res.back();
+
+    for(int i = 1; i <= n; i++){
+
+        if(check[i] == 0){
+
+            if(tong + cmin * (n - u + 1) < kq){
+
+                check[i] = 1;
+                res.push_back(i);
+
+                Try(u + 1, tong + a[v][i]);
+
+                check[i] = 0;
+                res.pop_back();
+            }
+        }
+    }
+}
+
+int main(){
+
+
+        cin >> n;
+
+        kq = INT_MAX;
+        cmin = INT_MAX;
+
+        memset(check, 0, sizeof(check));
+
+        res.clear();
+
+        for(int i = 1; i <= n; i++){
+            for(int j = 1; j <= n; j++){
+
+                cin >> a[i][j];
+
+                if(i != j)
+                    cmin = min(cmin, a[i][j]);
+            }
+        }
+
+        check[1] = 1;
+        res.push_back(1);
+
+        Try(1, 0);
+
+        cout << kq << endl;
+    }
