@@ -1,0 +1,38 @@
+#include <bits/stdc++.h>
+using namespace std;
+int a[105];
+int check;
+int k,n;
+void Try(int index, int tong){
+    if(check) return;
+    if(tong == k){
+        check = 1;
+        return;
+    }
+    for(int i = index; i<=n;i++){
+        if(tong + a[i] <= k){
+            Try(index + 1, tong + a[i]);
+        }
+        else return;
+    }
+}
+int main (){
+    int t; cin >> t;
+    while(t--){
+        cin >> n;
+        int sum = 0;
+      	for(int i = 1; i<=n;i++) {
+            cin >> a[i];
+            sum += a[i];
+        }
+        sort(a+1, a+n+1);
+        if(sum % 2 == 0){
+            k = sum / 2;
+            Try(1, 0);
+       		if(check) cout << "YES\n";
+            else cout << "NO" <<endl;
+        }
+        else cout << "NO\n";
+        
+    }
+}
