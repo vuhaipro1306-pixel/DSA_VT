@@ -1,0 +1,35 @@
+#include <bits/stdc++.h>
+using namespace std;
+//chú ý đề k cho đi quá 1 cạnh chứ k phải đi quá 1 đỉnh
+vector<int> res[25];
+int ans;
+int check[25][25];
+void DFS(int u, int cnt){
+    ans = max(ans, cnt);
+    for(int x : res[u]){
+        if(check[x][u] == 0){
+            check[u][x] = check[x][u] = 1;
+            DFS(x, cnt + 1);
+            //check[u][x] = check[x][u] = 0;
+        }
+    }
+}
+int main(){
+    int t;cin >> t;
+    while(t--){
+        int n, m; cin >> n >> m;
+        for(int i = 0; i<n;i++)
+            res[i].clear();
+        while(m--){
+            int u, v;cin >> u >> v;
+            res[u].push_back(v);
+            res[v].push_back(u);
+        }
+            ans = 0;
+            for(int i = 0; i<n;i++){
+                memset(check, 0, sizeof(check));
+                DFS(i, 0);
+            }
+            cout << ans << endl;
+        }
+	}
