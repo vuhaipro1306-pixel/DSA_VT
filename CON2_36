@@ -1,0 +1,29 @@
+#include <bits/stdc++.h>
+using namespace std;
+int a[6];
+int check;
+void DFS(int index, int tong){
+   if(check) return;
+   if(index == 6){
+       if(tong == 23){
+          check = 1;
+       }
+       return;
+   } 
+   DFS(index + 1, tong + a[index]);
+   DFS(index + 1, tong - a[index]);
+   DFS(index + 1, tong * a[index]);
+}
+int main(){
+    int t; cin >> t;
+    while(t--){
+        for(int i = 1; i<=5;i++) cin >> a[i];
+        check = 0;
+        sort(a+1, a+6);
+        do {
+            DFS(2, a[1]);
+        }while(next_permutation(a+1, a+6));
+    if(check) cout << "YES" << endl;
+    else cout <<"NO"<<endl;
+    }
+}
