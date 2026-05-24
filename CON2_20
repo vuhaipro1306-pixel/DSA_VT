@@ -1,0 +1,42 @@
+#include <bits/stdc++.h>
+using namespace std;
+int n; 
+vector<vector<int>> res;
+vector<int> v;
+
+void sinh(){
+    while(v.size() > 1){
+        vector<int> k(v.size() - 1);
+        for(int i = 0; i<v.size()-1; i++){
+            k[i] = v[i] + v[i+1];
+        }
+        v = k;
+        res.push_back(k);
+    }
+}
+int main(){
+    int t; cin >> t;
+    while(t--){
+       cin >> n;
+        res.clear();
+        v.clear();
+       for(int i = 0; i<n;i++){
+           int x; cin >> x;
+           v.push_back(x);
+       }
+        res.push_back(v);
+        sinh();
+        reverse(res.begin(), res.end());
+       for(int i = 0; i<res.size(); i++){
+           cout << "[";
+           for(int j = 0; j<res[i].size(); j++){
+               if(j == res[i].size() - 1){
+                   cout << res[i][j];
+               }
+               else cout << res[i][j] <<" ";
+           }
+           cout <<"] ";
+       }
+        cout << endl;
+    }
+}
