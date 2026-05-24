@@ -1,0 +1,24 @@
+#include <bits/stdc++.h> 
+using namespace std;
+int n, k, s;
+int cnt;
+void Try(int index, int tong, int start){
+    if(index == k){
+        if(tong == s) ++cnt;
+        return;
+    }
+    for(int i = start; i <=n;i++){
+        if(tong + i <= s){
+            Try(index + 1, tong + i, i+1);
+        }
+    }
+}
+int main(){
+    while(true){
+        cnt = 0;
+        cin >> n >> k >> s;
+        if(n == 0 && k == 0 && s == 0) break;
+        Try(0, 0, 1);
+        cout << cnt << endl;
+    }
+}
