@@ -1,33 +1,29 @@
 #include <bits/stdc++.h>
 using namespace std;
+//xet phuong trinh 4a+7b = n
+/*
+b1: uuw tiên số có ít chỗ số hơn trước -> nhiều số 7 nhất từ đầu -> số ít chữ số nhất
+b2: nếu có cùng chữ số thì in ra chuỗi có nhiều số 4 nhất trước 
+vd 7744, 7474,.. thì ta in 4477
+*/
 
-int main() {
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-
-    int t;
-    cin >> t;
-    while (t--) {
-        long long n; cin >> n;
-        bool ok = false;
-        for(int y = n/7; y>=0;y--){
-            int temp = n - 7*y;
-            if(temp % 4 == 0){
-                ok = true;
-                for(int i = 1;i <= temp / 4; i++){
-                    cout << 4;
-                }
-                for(int i = 1;i <= y;i++){
-                    cout << 7;
-                }
+int main (){
+    int t; cin >> t;
+    while(t--){
+    int n; cin >> n;
+    int check = 0;
+    for(int i = n/7;i>=0;i--){
+        if((n-7*i) % 4 == 0){
+            int a = (n-7*i) / 4;
+            for(int j = 0; j<a;j++){
+                cout << 4;
             }
-            if(ok){
-                cout << endl;
-                break;
-            }
+            for(int j = 0; j<i;j++) cout << 7;
+            check = 1;
+            break;
         }
-        if(ok == false) cout << -1 <<endl;
     }
-
-    return 0;
+    if(check == 0) cout << -1;
+    cout << endl;
+    }
 }
