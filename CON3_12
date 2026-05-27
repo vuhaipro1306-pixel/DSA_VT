@@ -1,0 +1,25 @@
+#include <bits/stdc++.h>
+using namespace std;
+/*
+ta có số kí tự nhiều nhất là k thì ví dụ aaaa
+a_a_a_a các kí tự còn lại là n - k phải >= k - 1 -> n+1/2 >=k
+*/
+int main(){
+    int t;
+    cin >> t;
+    while(t--){
+        string s; cin >> s;
+        map<char, int> mp;
+        int Max = 0;
+        for(auto x : s){
+            mp[x]++;
+            Max = max(mp[x], Max);
+        }
+        if(s.size() - 1 >= Max){
+            cout << 1 <<endl;
+        }
+        else cout << -1 <<endl;
+        
+        
+    }
+}
