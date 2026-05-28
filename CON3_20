@@ -1,59 +1,37 @@
 #include <bits/stdc++.h>
 using namespace std;
-/*chú ý bài này chỉ được swap 2 kí tự liền kề nhau 
-Chuỗi:
-]]][[[
-Ta muốn đưa [ ở vị trí 3 lên vị trí 0.
-Ban đầu:
-0 1 2 3 4 5
-] ] ] [ [ [
-      ↑
-Swap 1
-swap(2,3)
-] ] [ ] [ [
-Swap 2
-swap(1,2)
-] [ ] ] [ [
-Swap 3
-swap(0,1)
-[ ] ] ] [ [
-Tổng số swap:
-3 = k - x
-với
-x = 0
-k = 3
-b2 gọi i là sô [ và j là số ]
-b3: chạy vòng lặp i có thể >= j nếu j > i phải swap với thằng liền sau đầu tiên mà [ rồi i++, --j
-b4: sau vòng lặp nếu thỏa mãn la biểu thức đúng thì phải i == j
+/*
+nếu gặp [ thì ++cnt 
+gặp ] thì cộng ++cnt2
+nếu cnt2 > cnt1 thì tìm thằng đầu tiên từ vị trí đó bằng [ và swap nó do chỉ được đổi chỗ liên tiếp
+số lần đổi chỗ sẽ là j - i lần
 */
-int main() {
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-
-    int t;
-    cin >> t;
-    while (t--) {
-        string s; cin >> s;
-        int i = 0; int j = 0;
-        int cnt = 0;
-        for(int x= 0; x <s.size(); x++){
-            if(s[x] == '[') ++i;
-            else ++j;
-            if(j > i){
-            for(int k = x+1; k<s.size(); k++){
-                if(s[k] =='['){
-                    cnt += k - x;   // sửa ở đây
-                    i++; 
-                    j--;
-                    swap(s[x], s[k]);
+int res;
+void check(string s){
+    int cnt1 = 0;
+    int cnt2 = 0;
+    for(int i = 0; i<s.size();i++){
+        if(s[i] == '[') ++cnt1;
+        else ++cnt2;
+        if(cnt2 > cnt1){
+            for(int j = i+1; j <s.size(); j++){
+                if(s[j] == '['){
+                    res += (j-i);
+                    swap(s[j], s[i]);
+                    ++cnt1;
+                    --cnt2;
                     break;
                 }
             }
         }
     }
-        if(i == j) cout << cnt <<endl;
-        else cout << -1 << endl;
+}
+int main(){
+    int t; cin >> t;
+    while(t--){
+        string s; cin >> s;
+        res = 0;
+        check(s);
+        cout << res <<endl;
     }
-
-    return 0;
 }
