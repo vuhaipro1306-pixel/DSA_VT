@@ -1,0 +1,63 @@
+#include <bits/stdc++.h>
+using namespace std;
+/*
+Mỗi chữ số tối đa là 9.
+Nên:
+D chữ số tối đa tạo được tổng = 9 * D
+Nếu:
+S>9D
+thì chắc chắn vô nghiệm.
+Số nhỏ nhất ⇒ chữ số bên trái phải nhỏ nhất có thể.
+duyệt từ trái sang phải
+và ở mỗi vị trí:
+thử chữ số nhỏ nhất có thể
+Sau khi chọn chữ số digit:
+remain = S - digit
+Các chữ số còn lại tối đa tạo được:
+9 * remainingDigits
+Muốn bài toán phía sau còn giải được:
+remain≤9×remainingDigits
+và:
+remain≥0
+*/
+#include <bits/stdc++.h>
+using namespace std;
+
+int main () {
+    int t; 
+    cin >> t;
+
+    while(t--) {
+
+        int n, d; 
+        cin >> n >> d;
+
+        string s = "";
+
+        if(n > 9 * d) {
+            cout << -1 << endl;
+            continue;
+        }
+
+        for(int i = 0; i < d; i++) {
+
+            for(int j = 0; j <= 9; j++) {
+
+                // chữ số đầu không được là 0
+                if(i == 0 && j == 0) continue;
+
+                // kiểm tra phần còn lại còn tạo được không
+                if(n - j >= 0 &&
+                   (n - j) <= (d - 1 - i) * 9) {
+
+                    n -= j;
+                    s += (j + '0');
+
+                    break;
+                }
+            }
+        }
+
+        cout << s << endl;
+    }
+}
